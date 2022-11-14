@@ -6,6 +6,10 @@ class FieldDataSerializer(serializers.ModelSerializer):
         model = FieldData
         fields = '__all__'
 
+class FieldDataHieghestTree(serializers.ModelSerializer):
+    class Meta:
+        model = FieldData
+        fields = ['individual_tree_id', 'height']
 
 class FieldDataFileSerializer(serializers.Serializer):
     file = serializers.FileField()
