@@ -1,7 +1,7 @@
 from django.db import models
 
 class FieldData(models.Model):
-    class HealthChoices(models.Model):
+    class HealthChoices(models.IntegerChoices):
         Poor = 1
         Ok = 2
         Excellent = 3
@@ -10,7 +10,7 @@ class FieldData(models.Model):
     species_id = models.IntegerField()
     method = models.CharField(max_length=50)
     height = models.IntegerField()
-    health = models.IntegerChoices(choices = HealthChoices)
+    health = models.IntegerField(choices=HealthChoices.choices)
     year_monitored = models.CharField(max_length=4)
 
 class Species(models.Model):
