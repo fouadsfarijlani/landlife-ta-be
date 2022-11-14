@@ -12,3 +12,7 @@ class FieldData(models.Model):
     height = models.IntegerField()
     health = models.IntegerChoices(choices = HealthChoices)
     year_monitored = models.CharField(max_length=4)
+
+class Species(models.Model):
+    tree_species_id = models.IntegerField(primary_key=True)
+    latin_name = models.CharField(max_length=100)
