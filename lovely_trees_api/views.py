@@ -9,11 +9,9 @@ from django.shortcuts import get_object_or_404
 
 @api_view(['GET'])
 def get_data(request):
-    test = {
-        'name': 'Test',
-        'something': 'hi'
-    }
-    return Response(test)
+    field_data = FieldData.objects.all()
+    serializer = FieldDataSerializer(field_data, many = True)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def addData(request):
