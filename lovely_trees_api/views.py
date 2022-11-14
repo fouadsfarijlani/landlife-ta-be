@@ -22,6 +22,9 @@ def addData(request):
 
 
 class UploadSpeciesFileView(generics.CreateAPIView):
+    '''
+        A class to upload Species csv files and parse them using pandas
+    '''
     serializer_class = SpeciesFileSerlizer
 
     def post(self, request, *args, **kwargs):
@@ -37,6 +40,9 @@ class UploadSpeciesFileView(generics.CreateAPIView):
             new_file.save()
         return Response({'status' : 'success'})
 class UploadFieldDataFileView(generics.CreateAPIView):
+    '''
+        A class to upload Species csv files and parse them using pandas
+    '''
     serializer_class = FieldDataFileSerializer
 
     def post(self, request, *args, **kwargs):
