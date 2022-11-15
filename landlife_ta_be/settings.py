@@ -53,6 +53,9 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+# adding the localhost frontend to allow connection to the frontend
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+
 ROOT_URLCONF = 'landlife_ta_be.urls'
 
 TEMPLATES = [
