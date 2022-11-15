@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import generics
-from .serializers import FieldDataSerializer, FieldDataFileSerializer, SpeciesFileSerlizer, FieldDataHieghestTree 
+from .serializers import FieldDataSerializer, FieldDataFileSerializer, SpeciesFileSerlizer, FieldDataHieghestTree, SpeciesSerializer
 from .models import FieldData, Species
 import pandas as pd
 import io, csv
@@ -34,6 +34,16 @@ def getHighestTree(request):
     # create final output
     final_output = {"year": selected_year, "highest_trees": serializer.data}
     return Response(final_output)
+
+@api_view(['GET'])
+def getSpecies(request):
+    # query distinct methods for data
+    species = Species.objects.all()
+    
+    #serialize the data
+    serializer = SpeciesSerializer(species, many = True)
+    return Response(serializer.data)
+
 
 class UploadSpeciesFileView(generics.CreateAPIView):
     '''

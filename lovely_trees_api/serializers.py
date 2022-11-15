@@ -16,3 +16,8 @@ class FieldDataFileSerializer(serializers.Serializer):
 
 class SpeciesFileSerlizer(serializers.Serializer):
     file = serializers.FileField()
+
+class SpeciesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Species
+        fields = '__all__'

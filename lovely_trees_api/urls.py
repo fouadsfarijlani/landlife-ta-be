@@ -8,4 +8,5 @@ urlpatterns = [
     path('uploadFieldDataFile/', views.UploadFieldDataFileView.as_view(), name='upload-filed-data-file'),
     path('getHighestTree/', views.getHighestTree, name='get-highest-tree'),
     path('getHighestTree/<str:year_monitored>', views.getHighestTree, name='get-highest-tree'),
+    path('species/', views.getSpecies),
 ]
