@@ -36,6 +36,10 @@ def getSpecies(request):
 
 @api_view(['GET'])
 def getBestMethodForSpecies(request):
+    ####################################################
+    # This method is not finished yet, still requires some adjustment to get the right data
+    ####################################################
+    
     selected_species = request.query_params.get('species_id')
     method_avg = FieldData.objects.all().filter(species_id = selected_species).aggregate(Avg('health'))
     species_data = Species.objects.all().filter(tree_species_id = selected_species)
