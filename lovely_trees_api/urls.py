@@ -9,4 +9,6 @@ urlpatterns = [
     path('getHighestTree/', views.getHighestTree, name='get-highest-tree'),
     path('getHighestTree/<str:year_monitored>', views.getHighestTree, name='get-highest-tree'),
     path('species/', views.getSpecies),
+    path('bestMethodForSpecies/', views.getBestMethodForSpecies, name='best-method-for-species'),
+    path('bestMethodForSpecies/<int:species_id>', views.getBestMethodForSpecies, name='best-method-for-species'),
 ]

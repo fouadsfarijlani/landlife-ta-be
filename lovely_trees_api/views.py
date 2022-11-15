@@ -4,8 +4,8 @@ from rest_framework import generics
 from .serializers import FieldDataSerializer, FieldDataFileSerializer, SpeciesFileSerlizer, FieldDataHieghestTree, SpeciesSerializer
 from .models import FieldData, Species
 import pandas as pd
-import io, csv
 from django.shortcuts import get_object_or_404
+from django.db.models import Avg, Count
 
 @api_view(['GET'])
 def get_data(request):
@@ -22,27 +22,27 @@ def addData(request):
 
 @api_view(['GET'])
 def getHighestTree(request):
-    # store query param in a variable
     selected_year = request.query_params.get('year_monitored')
-    
-    # get the first five entries in the query set
     field_data = FieldData.objects.values('individual_tree_id', 'height').filter(year_monitored = selected_year).order_by('-height')[:5]
-    
-    # create serializer
     serializer = FieldDataHieghestTree(field_data, many = True)
-
-    # create final output
     final_output = {"year": selected_year, "highest_trees": serializer.data}
     return Response(final_output)
 
 @api_view(['GET'])
 def getSpecies(request):
-    # query distinct methods for data
     species = Species.objects.all()
-    
-    #serialize the data
     serializer = SpeciesSerializer(species, many = True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def getBestMethodForSpecies(request):
+    selected_species = request.query_params.get('species_id')
+    method_avg = FieldData.objects.all().filter(species_id = selected_species).aggregate(Avg('health'))
+    species_data = Species.objects.all().filter(tree_species_id = selected_species)
+    method_count = FieldData.objects.values('method').annotate(total = Count('method')).order_by('-total')[:1][0]
+    trees_with_methods = FieldData.objects.values('individual_tree_id', 'year_monitored', 'health').filter(method = method_count['method'])
+    
+    return Response({'tree_species_id': selected_species, 'best_method': method_count['method'], "health_avg": method_avg['health__avg']})
 
 
 class UploadSpeciesFileView(generics.CreateAPIView):
